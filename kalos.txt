@@ -1,0 +1,63 @@
+Route          Pokemon Caught          Typing          Status
+Route 1
+NoneRoute 2
+NoneRoute 3
+NoneRoute 4
+NoneRoute 5
+NoneRoute 6
+NoneRoute 7
+NoneRoute 8
+NoneRoute 9
+NoneRoute 10
+NoneRoute 11
+NoneRoute 12
+NoneRoute 13
+NoneRoute 14
+NoneRoute 15
+NoneRoute 16
+NoneRoute 17
+NoneRoute 18
+NoneRoute 19
+NoneRoute 20
+NoneRoute 21
+NoneRoute 22
+NoneAmbrette Town
+NoneAnistar City
+NoneAquacorde Town
+NoneAzure Bay
+NoneBattle Chateau
+NoneBattle Maison
+NoneCamphrier Town
+NoneChamber of Emptiness
+NoneConnecting Cave
+NoneCoumarine City
+NoneCouriway Town
+NoneCyllage City
+NoneDendemille Town
+NoneFlare Cafe
+NoneFrost Cavern
+NoneGeosenge Town
+NoneGlittering Cave
+NoneKalos Power Plant
+NoneKiloude City
+NoneLaverre City
+NoneLost Hotel
+NoneLumiose City
+NoneParfum Palace
+NonePoké Ball Factory
+NonePokémon League
+NonePokémon Village
+NoneReflection Cave
+NoneRoaming Kalos
+NoneSantalune City
+NoneSantalune Forest
+NoneSea Spirit's Den
+NoneShalour City
+NoneSnowbelle City
+NoneTeam Flare HQ
+NoneTerminus Cave
+NoneTower of Mastery
+NoneUnknown Dungeon
+NoneVaniville Town
+NoneVictory Road
+None

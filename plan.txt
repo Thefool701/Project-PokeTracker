@@ -1,0 +1,16 @@
+
+
+Program Requirments: 
+ - The Program reads the routes names from a seperate input file, and writes 
+the result in an output file. 
+ - The first column shows what the name of the route is. 
+ - The second columns shows what Pokemon I caught.
+ - The third column shows the status of the route.
+ - The fourth column shows what typing the pokemon was.
+ - The program takes the name the pokemon as input, and also double checking the
+user if they inputted the correct name of the mon.
+ - The program also needs to display the routes in a pleasing manner. 
+
+
+Functions I may need. 
+
