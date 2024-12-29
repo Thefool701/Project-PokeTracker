@@ -1,4 +1,5 @@
 #include <malloc.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,19 +15,29 @@ void clear_terminal() {
 #endif
 }
 
-struct Routes {
+struct Routes_t {
   char route_name[LEN];
-  struct Routes *next;
+  char pokemon[LEN];
+  char typing[LEN];
+  bool status;
+  struct Routes_t *next;
 };
-
-struct Routes *create_node(char data[LEN]) {
-  struct Routes *new_node = (struct Routes *)malloc(sizeof(struct Routes));
+struct Tracker_t {
+  char route_name[LEN];
+  char pokemon[LEN];
+  char typing[LEN];
+  bool status;
+  struct Tracker_T *next;
+};
+struct Routes_t *create_node(char data[LEN]) {
+  struct Routes_t *new_node =
+      (struct Routes_t *)malloc(sizeof(struct Routes_t));
   strcpy(new_node->route_name, data);
   new_node->next = NULL;
   return new_node;
 }
-void printList(struct Routes *head) {
-  struct Routes *temp = head;
+void print_list(struct Routes_t *head) {
+  struct Routes_t *temp = head;
   while (temp != NULL) {
     printf("%s -> ", temp->route_name);
     temp = temp->next;
@@ -34,8 +45,8 @@ void printList(struct Routes *head) {
   printf("NULL\n");
 }
 
-void printToFile(struct Routes *head, FILE *outfile) {
-  struct Routes *temp = head;
+void print_to_file(struct Routes_t *head, FILE *outfile) {
+  struct Routes_t *temp = head;
   fprintf(outfile,
           "Route          Pokemon Caught          Typing          Status\n");
   while (temp != NULL) {
@@ -43,24 +54,29 @@ void printToFile(struct Routes *head, FILE *outfile) {
     temp = temp->next;
   }
 }
-void printToScreen(struct Routes *head, FILE *outfile) {
-  struct Routes *temp = head;
-  printf("Route          Pokemon Caught          Typing          Status\n");
+void display_routes(struct Routes_t *head) {
+  struct Routes_t *temp = head;
+  printf("<<< ROUTES >>>\n");
   while (temp != NULL) {
     printf("%s", temp->route_name);
     temp = temp->next;
   }
 }
 
-void insert_node(struct Routes **head, char data[LEN]) {
+void remove_route(struct Tracker_t *head, char route_name[LEN]) {
+  struct Tracker_t *temp = head;
+}
+
+void check_duplicate_pokemon(struct Routes_t *head, char pokemon[LEN]) {}
+
+void insert_node(struct Routes_t **head, char data[LEN]) {
   // Create the new node with the given value
-  struct Routes *new_node = create_node(data);
-  // Check to see if the head is empty, and if so, make the newNode the new head
+  struct Routes_t *new_node = create_node(data);
   if (*head == NULL) {
     *head = new_node;
     return;
   }
-  struct Routes *temp = *head;
+  struct Routes_t *temp = *head;
   // Traverse the list until the last node is reached
   while (temp->next != NULL) {
     temp = temp->next;
@@ -68,8 +84,12 @@ void insert_node(struct Routes **head, char data[LEN]) {
   // Then set the last node to point to the new node
   temp->next = new_node;
 }
+
+void search_route(struct Routes_t *head, char route_name[LEN]) {}
 int main() {
-  struct Routes *route = NULL;
+  // TODO: Add a way for the program to check if you already have the pokemon,
+  // and if so, print it and ask the user to input another pokemon
+  struct Routes_t *route = NULL;
 
   FILE *infile = fopen("kalos_routes.txt", "r");
   FILE *outfile = fopen("kalos.txt", "w");
@@ -83,7 +103,44 @@ int main() {
     insert_node(&route, buffer);
   }
   // FIX: There is a problem with printing.
-  // printToFile(route, outfile);
+
+  int choice;
+  char pokemon[LEN];
+  char route_name[LEN];
+  while (1) {
+    printf("\n<<<< Poke-Tracker >>>>\n");
+    printf("1. Display Routes\n");
+    printf("2. Remove Route\n");
+    printf("3. Check Duplicate Pokemon\n");
+    printf("4. Search Route\n");
+    printf("5. Exit\n");
+    printf("\nEnter Choice: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+    case 1:
+      clear_terminal();
+      display_routes(route);
+      break;
+    case 2:
+      clear_terminal();
+      remove_route(route, route_name);
+      break;
+    case 3:
+      clear_terminal();
+      check_duplicate_pokemon(route, pokemon);
+      break;
+    case 4:
+      break;
+    case 5:
+      clear_terminal();
+      exit(1);
+      break;
+    defualt:
+      printf("Invalid Input. Try Again.\n");
+      break;
+    }
+  }
 
   fclose(infile);
   fclose(outfile);
