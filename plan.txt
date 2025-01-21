@@ -13,4 +13,12 @@ user if they inputted the correct name of the mon.
 
 
 Functions I may need. 
-
+ - Crosses out Routes 
+    -> Pokemon
+    -> Typing
+    -> Route 
+    -> Route Status
+ - Checks if a route is available 
+ - Prints the table 
+ - Reading and Writing to an output file
+ - Input if a Pokemon has already been caught or not
