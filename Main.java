@@ -1,15 +1,21 @@
 import java.util.Scanner;
 import java.util.LinkedList;
 import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         File infile = new File("routes.in");
+        File outfile = new File("table.in");
         LinkedList<String> routes = new LinkedList<String>();
         int choice = 0;
-        readInputFile(infile, routes);
-        File outfile = new File("table.in");
+        if (outfile == NULL) {
+           readInputFile(infile, routes);
+        }
+        BufferedWriter outTable = new BufferedWriter(new FileWriter("table.in"));
         LinkedList<String> row = new LinkedList<String>();
         readOutfile(outfile, row);
 
@@ -82,10 +88,12 @@ public class Main {
 
         System.out.println("Enter Route: ");
         route = in.nextLine();
-        System.out.println("Enter POkemon: ");
+        System.out.println("Enter Pokemon: ");
         pokemon = in.nextLine();
         System.out.println("Pokemon Typing(Primary/Secondary): ");
         pokemonTyping = in.nextLine();
+
+        
 
     }
 
