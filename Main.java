@@ -8,16 +8,16 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        BufferedWriter outTable = new BufferedWriter(new FileWriter("table.in"));
+        LinkedList<String> row = new LinkedList<String>();
         File infile = new File("routes.in");
         File outfile = new File("table.in");
         LinkedList<String> routes = new LinkedList<String>();
         int choice = 0;
-        if (outfile == NULL) {
-           readInputFile(infile, routes);
+        if (readOutfile(infile, row) == false) {
+            readInputFile(infile, routes);
         }
-        BufferedWriter outTable = new BufferedWriter(new FileWriter("table.in"));
-        LinkedList<String> row = new LinkedList<String>();
-        readOutfile(outfile, row);
+       readOutfile(outfile, row);
 
         while (choice != 1) {
             System.out.println("<<< Nuzlocke Routes Manager >>>");
@@ -31,7 +31,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    markRoute(outfile, routes);
+                    markRoute(infile, routes);
                     break;
                 case 2:
                     duplicatePokemonCheck(outfile, row);
@@ -65,18 +65,20 @@ public class Main {
     }
 
     // TODO: Stil not sure if this method is necessary
-    public static void readOutfile(File outfile, LinkedList<String> row) {
+    public static boolean readOutfile(File infile, LinkedList<String> row) {
         try {
             Scanner in = new Scanner(outfile);
             while (in.hasNext()) {
-                String temp = in.nextLine();
-                String[] input = temp.split(temp);
-            }
-
+                return true; 
+            } 
         } catch (Exception e) {
             System.out.println("error reading outfile...");
             e.printStackTrace();
         }
+
+        return  false; 
+
+    
     }
 
     public static void markRoute(File outfile, LinkedList<String> routes) {
