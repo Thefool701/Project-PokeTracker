@@ -144,17 +144,12 @@ public class Main {
 
         System.out.printf("%nEnter Route: ");
         route = in.nextLine();
-        int filePos = searchRoute(outfile, route);
+        System.out.printf("%nEnter Pokemon: ");
+        pokemon = in.nextLine();
+        System.out.printf("%nPokemon Typing(Primary/Secondary): ");
+        pokemonTyping = in.nextLine();
 
-        if (filePos == 1) {
-            System.out.println("Route has already been marked.");
-            markRoute(outfile, routes);
-        } else if (filePos == 2) {
-            System.out.println("There is no such route.");
-            markRoute(outfile, routes);
-        }
-
-        System.out.println("Route Line:" + filePos);
+        int filePos = searchRoute(outfile, routes);
 
         in.close();
     }
@@ -169,7 +164,7 @@ public class Main {
      * @return an int which indicates where specifically the route is
      */
 
-    public static int searchRoute(File outfile, String route) {
+    public static int searchRoute(File outfile, LinkedList<String> routes) {
         int filePos = 0;
         try {
             @SuppressWarnings("resource")
@@ -177,14 +172,14 @@ public class Main {
             int count = 0;
             while (on.hasNext()) {
                 String temp = on.nextLine();
-                int spaceCount = temp.replaceAll("[^ ]", "").length();
-
-                if (temp.equals(route) == true) {
-                    System.out.println("found...");
-                    return filePos;
+                if (count == 0) {
+                    ++count;
+                    continue;
                 }
+                // Checks if temp has more than one space
+                // if true, then split it into array and compare with @param route
+                // if not, then just compare with @param route
 
-                // TODO: Also check if ther oute has been types correctly
                 ++filePos;
             }
 
@@ -193,7 +188,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        return 2;
+        return filePos;
     }
 
     public static void duplicatePokemonCheck(File outfile, LinkedList<String> row) {
