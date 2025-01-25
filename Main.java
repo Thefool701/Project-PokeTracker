@@ -21,14 +21,15 @@ public class Main {
             System.out.println("1. Mark Route");
             System.out.println("2. Duplicate Pokemon Check");
             System.out.println("3. Route Status");
-            System.out.println("4. Print Table");
-            System.out.println("5. Exit");
+            System.out.println("4. Search Route");
+            System.out.println("5. Print Table");
+            System.out.println("6. Exit");
             System.out.printf("%nEnter Choice: ");
             choice = in.nextInt();
 
             switch (choice) {
                 case 1:
-                    markRoute(infile, routes);
+                    markRoute(outfile, routes);
                     break;
                 case 2:
                     duplicatePokemonCheck(outfile, row);
@@ -37,9 +38,12 @@ public class Main {
                     routeStatusCheck(outfile, row);
                     break;
                 case 4:
-                    printTable(outfile, row);
+                    searchRoute(outfile);
                     break;
                 case 5:
+                    printTable(outfile, row);
+                    break;
+                case 6:
                     System.exit(1);
                     break;
                 default:
@@ -134,27 +138,55 @@ public class Main {
      *
      * @param takes an output file as input
      * @param takes a linked list which contains the routes
+     *
      */
     public static void markRoute(File outfile, LinkedList<String> routes) {
         Scanner in = new Scanner(System.in);
         String pokemon = "";
         String pokemonTyping = "";
         String route = "";
-        boolean routeStatus = true;
-
+        String routeInfo = "";
+        String routeStatus = "true";
         System.out.printf("%nEnter Route: ");
         route = in.nextLine();
-        int filePos = searchRoute(outfile, route);
+        System.out.printf("%nEnter Pokemon: ");
+        pokemon = in.nextLine();
+        System.out.printf("%nEnter Pokemon Typing(Primary/Secondary): ");
+        pokemonTyping = in.nextLine();
 
-        if (filePos == 1) {
-            System.out.println("Route has already been marked.");
-            markRoute(outfile, routes);
-        } else if (filePos == 2) {
-            System.out.println("There is no such route.");
-            markRoute(outfile, routes);
+        try {
+            FileInputStream outStream = new FileInputStream(outfile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
+            String line = "";
+            StringBuilder fileContent = new StringBuilder();
+
+            while ((line = br.readLine()) != null) {
+                String[] tokens = new String[4];
+                String spaces = "       ";
+                tokens[0] = line;
+                if (tokens.length > 0) {
+                    if (tokens[0].equals(route)) {
+                        tokens[1] = pokemon;
+                        tokens[2] = pokemonTyping;
+                        tokens[3] = routeStatus;
+
+                        String newRouteInfo = tokens[0] + spaces + tokens[1] + spaces + tokens[2] + spaces + tokens[3];
+                        fileContent.append(newRouteInfo);
+                        fileContent.append("\n");
+                    } else {
+                        fileContent.append(line);
+                        fileContent.append("\n");
+                    }
+                }
+            }
+            FileWriter outStreamWriter = new FileWriter(outfile);
+            BufferedWriter out = new BufferedWriter(outStreamWriter);
+            out.write(fileContent.toString());
+            out.close();
+        } catch (Exception e) {
+            System.out.println("error in editing route");
+            e.printStackTrace();
         }
-
-        System.out.println("Route Line:" + filePos);
 
         in.close();
     }
@@ -164,27 +196,29 @@ public class Main {
      * an int indicating where the route is
      *
      * @param takes an outfile as input
-     * @param takes the String route
      *
-     * @return an int which indicates where specifically the route is
+     * 
      */
 
-    public static int searchRoute(File outfile, String route) {
+    public static int searchRoute(File outfile) {
         int filePos = 0;
         try {
             @SuppressWarnings("resource")
             Scanner on = new Scanner(outfile);
-            int count = 0;
-            while (on.hasNext()) {
-                String temp = on.nextLine();
-                int spaceCount = temp.replaceAll("[^ ]", "").length();
+            Scanner in = new Scanner(System.in);
 
-                if (temp.equals(route) == true) {
+            System.out.printf("%nEnter Route to Search: ");
+            String findRoute = in.nextLine();
+            while (on.hasNext()) {
+                // Check how many spoaces there is in the line
+                // If more than 1, then split into tokens and compare
+                // token[0] with findRoute
+                // else, then just compare line with findRoute
+                String temp = on.nextLine();
+                if (temp.equals(findRoute) == true) {
                     System.out.println("found...");
                     return filePos;
                 }
-
-                // TODO: Also check if ther oute has been types correctly
                 ++filePos;
             }
 
@@ -194,6 +228,53 @@ public class Main {
         }
 
         return 2;
+    }
+
+    /**
+     * Edits a route from the specific line in the file
+     * 
+     * @param outfile
+     * @param route
+     * @param pokemon
+     * @param pokemonTyping
+     * @param routeStatus
+     *
+     */
+
+    public static void editRoute(File outfile, String route, String pokemon, String pokemonTyping, String routeStatus) {
+        try {
+            FileInputStream outStream = new FileInputStream(outfile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
+            String line = "";
+            StringBuilder fileContent = new StringBuilder();
+
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                String[] tokens = line.split(" ");
+                String spaces = "         ";
+                if (tokens.length > 0) {
+                    if (tokens[0].equals(route)) {
+                        tokens[1] = pokemon;
+                        tokens[2] = pokemonTyping;
+                        tokens[3] = routeStatus;
+
+                        String newRouteInfo = tokens[0] + spaces + tokens[1] + spaces + tokens[2] + spaces + tokens[3];
+                        fileContent.append(newRouteInfo);
+                        fileContent.append("\n");
+                    } else {
+                        fileContent.append(line);
+                        fileContent.append("\n");
+                    }
+                }
+            }
+            FileWriter outStreamWriter = new FileWriter(outfile);
+            BufferedWriter out = new BufferedWriter(outStreamWriter);
+            out.write(fileContent.toString());
+            out.close();
+        } catch (Exception e) {
+            System.out.println("error in editing route");
+            e.printStackTrace();
+        }
     }
 
     public static void duplicatePokemonCheck(File outfile, LinkedList<String> row) {
@@ -212,8 +293,6 @@ public class Main {
      */
     public static void printTable(File outfile, LinkedList<String> row) {
         try {
-            // TODO: This needs improvement and changes.
-            // Make it print a table with the corresponding fields
             Scanner in = new Scanner(outfile);
             while (in.hasNext()) {
                 String temp = in.nextLine();

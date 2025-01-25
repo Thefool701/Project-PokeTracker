@@ -1,8 +1,8 @@
 Route         Pokemon         Typing          Status
-Route 1
+Route 1       CLeafa       Fairy       true
 Route 2
-Route 3
-Route 4
+Route 3       Clefairy       Fairy       true
+Route 4     Greninja     Water/Dark     true
 Route 5
 Route 6
 Route 7
@@ -21,7 +21,7 @@ Route 19
 Route 20
 Route 21
 Route 22
-Ambrette Town
+Ambrette Town       Charmander       Fire       true
 Anistar City
 Aquacorde Town
 Azure Bay
