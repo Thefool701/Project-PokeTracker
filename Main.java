@@ -3,6 +3,9 @@ import java.util.LinkedList;
 import java.io.*;
 import java.io.FileWriter;
 
+// TODO: Add option to delete contents of the file and add a 2nd layer 
+// of security within it
+
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -32,7 +35,7 @@ public class Main {
                     markRoute(outfile, routes);
                     break;
                 case 2:
-                    duplicatePokemonCheck(outfile, row);
+                    duplicatePokemonCheck(outfile);
                     break;
                 case 3:
                     routeStatusCheck(outfile, row);
@@ -71,8 +74,8 @@ public class Main {
     /**
      * Reads from an Input File
      *
-     * @param takes infile as file input
-     * @param takes a linedList named routes
+     * @param infile The file that contains the names of the routes region
+     * @param routes A list of all the routes of the region
      */
 
     public static void readInputFile(File infile, LinkedList<String> routes) {
@@ -92,8 +95,8 @@ public class Main {
     /**
      * Reads an outfile and determines whether file is empty or not
      *
-     * @param takes an input file as parameter
-     * @return returns either true or false if file is empty
+     * @param infile The file that contains the regions routes
+     * @return If the file exists
      *
      */
 
@@ -113,8 +116,8 @@ public class Main {
     /**
      * Creates an outfile that contains a table of route information
      *
-     * @param takes a output file as input
-     * @param takes a Linked List of routes as input
+     * @param outfile The file that contains the database of the region
+     * @param routes  List of the routes of the region
      */
 
     public static void writeOutfile(File outfile, LinkedList<String> routes) {
@@ -136,8 +139,8 @@ public class Main {
     /**
      * Marks a route and inputs the necessary data for the route
      *
-     * @param takes an output file as input
-     * @param takes a linked list which contains the routes
+     * @param outfile The file that contains the regions routes
+     * @param routes  List of all the routes in the region
      *
      */
     public static void markRoute(File outfile, LinkedList<String> routes) {
@@ -146,7 +149,7 @@ public class Main {
         String pokemonTyping = "";
         String route = "";
         String routeInfo = "";
-        String routeStatus = "true";
+        String routeStatus = "Unavailable";
         System.out.printf("%nEnter Route: ");
         route = in.nextLine();
         System.out.printf("%nEnter Pokemon: ");
@@ -195,7 +198,7 @@ public class Main {
      * It Searches the specific position where the route is and returns
      * an int indicating where the route is
      *
-     * @param takes an outfile as input
+     * @param outfile File that contains the region database
      *
      * 
      */
@@ -233,11 +236,11 @@ public class Main {
     /**
      * Edits a route from the specific line in the file
      * 
-     * @param outfile
-     * @param route
-     * @param pokemon
-     * @param pokemonTyping
-     * @param routeStatus
+     * @param outfile       File that contains the region database
+     * @param route         Route of the region
+     * @param pokemon       Pokemon of the Region
+     * @param pokemonTyping The Pokemons Typing
+     * @param routeStatus   The availability of the route
      *
      */
 
@@ -277,8 +280,42 @@ public class Main {
         }
     }
 
-    public static void duplicatePokemonCheck(File outfile, LinkedList<String> row) {
+    /**
+     * Checks to see if the pokemon has already been caught or not
+     *
+     * @param outfile File that contains the region database
+     *
+     */
 
+    public static void duplicatePokemonCheck(File outfile) {
+        try {
+            FileInputStream outStream = new FileInputStream(outfile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
+            String line = "";
+            Scanner in = new Scanner(System.in);
+
+            String pokemon = "";
+
+            System.out.printf("%nEnter Pokemon to Check: ");
+            pokemon = in.nextLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split(" ");
+                System.out.println(tokens[0]);
+                if (tokens.length > 0) {
+                    if (tokens[1].equals(pokemon)) {
+                        System.out.println("Pokemon already exists.");
+                        break;
+                    } else {
+                        System.out.println("No such Pokemon.");
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("error in editing route");
+            e.printStackTrace();
+        }
     }
 
     public static void routeStatusCheck(File outfile, LinkedList<String> row) {
