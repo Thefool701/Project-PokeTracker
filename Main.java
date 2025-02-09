@@ -3,9 +3,10 @@ import java.util.LinkedList;
 import java.io.*;
 import java.io.FileWriter;
 
-// TODO: Add option to delete contents of the file and add a 2nd layer 
-// of security within it
-
+// TODO: Add option to delete contents of the file and add 2nd layer of security
+// when deleting the contents of file. 
+//
+// TODO: Add the clear screen method 
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -19,6 +20,7 @@ public class Main {
             readInputFile(infile, routes);
             writeOutfile(outfile, routes);
         }
+        // TODO: Add option to edit route
         while (choice != 1) {
             System.out.println("<<< Nuzlocke Routes Manager >>>");
             System.out.println("1. Mark Route");
@@ -38,7 +40,7 @@ public class Main {
                     duplicatePokemonCheck(outfile);
                     break;
                 case 3:
-                    routeStatusCheck(outfile, row);
+                    routeStatusCheck(outfile);
                     break;
                 case 4:
                     searchRoute(outfile);
@@ -159,6 +161,7 @@ public class Main {
         pokemonTyping = in.nextLine();
 
         try {
+            // FIX: Fix alignment of the routeInfo in file
             FileInputStream outStream = new FileInputStream(outfile);
             BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
             String line = "";
@@ -216,6 +219,7 @@ public class Main {
             System.out.printf("%nEnter Route to Search: ");
             String findRoute = in.nextLine();
             while (on.hasNext()) {
+                // TODO: Also do this
                 // Check how many spoaces there is in the line
                 // If more than 1, then split into tokens and compare
                 // token[0] with findRoute
@@ -244,7 +248,7 @@ public class Main {
      * @param routeStatus   The availability of the route
      *
      */
-
+    // TODO: Remove params and input routeInfo in the method itself
     public static void editRoute(File outfile, String route, String pokemon, String pokemonTyping, String routeStatus) {
         try {
             FileInputStream outStream = new FileInputStream(outfile);
@@ -300,7 +304,7 @@ public class Main {
 
             System.out.printf("%nEnter Pokemon to Check: ");
             pokemon = in.nextLine();
-
+            // FIX: Loop is only reading the first line and not continuing
             while ((line = br.readLine()) != null) {
                 String[] tokens = line.split(" ");
                 System.out.println(tokens[0]);
@@ -322,8 +326,50 @@ public class Main {
         }
     }
 
-    public static void routeStatusCheck(File outfile, LinkedList<String> row) {
+    /**
+     * Checks the status of the route and shows if it is available or not.
+     *
+     * @param outfile The file that contains the info of the route.
+     */
 
+    public static void routeStatusCheck(File outfile) {
+        try {
+            FileInputStream outStream = new FileInputStream(outfile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
+            String line = "";
+            Scanner in = new Scanner(System.in);
+
+            String route = "";
+
+            System.out.printf("%nEnter Route to Check: ");
+            route = in.nextLine();
+
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split(" ");
+                System.out.println(tokens[0]);
+                if (tokens.length > 0) {
+                    // FIX: Also only reads the first line of the file
+                    if (tokens[0].equals(route)) {
+                        if (tokens[3].equals("Available")) {
+                            System.out.println("Route is Unavailable.");
+                        } else if (tokens[3].equals("")) {
+                            System.out.println("Route is Available.");
+                        } else {
+                            System.out.println("Route is Available.");
+                        }
+                        break;
+                    } else {
+                        System.out.println("No such Route.");
+                        break;
+                    }
+                }
+                in.close();
+                br.close();
+            }
+        } catch (Exception e) {
+            System.out.println("route status checker failed...");
+            e.printStackTrace();
+        }
     }
 
     /**
