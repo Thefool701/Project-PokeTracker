@@ -53,6 +53,7 @@ public class Main {
                     System.out.println("Invalid Choice. Try Again.");
             }
         }
+        in.close();
     }
 
     public static void createOutfile() {
@@ -102,6 +103,7 @@ public class Main {
 
     public static boolean readOutfile(File infile) {
         try {
+            @SuppressWarnings("resource")
             Scanner in = new Scanner(infile);
             if (in.hasNext()) {
                 return true;
@@ -148,7 +150,6 @@ public class Main {
         String pokemon = "";
         String pokemonTyping = "";
         String route = "";
-        String routeInfo = "";
         String routeStatus = "Unavailable";
         System.out.printf("%nEnter Route: ");
         route = in.nextLine();
@@ -186,6 +187,7 @@ public class Main {
             BufferedWriter out = new BufferedWriter(outStreamWriter);
             out.write(fileContent.toString());
             out.close();
+            br.close();
         } catch (Exception e) {
             System.out.println("error in editing route");
             e.printStackTrace();
@@ -208,6 +210,7 @@ public class Main {
         try {
             @SuppressWarnings("resource")
             Scanner on = new Scanner(outfile);
+            @SuppressWarnings("resource")
             Scanner in = new Scanner(System.in);
 
             System.out.printf("%nEnter Route to Search: ");
@@ -224,12 +227,10 @@ public class Main {
                 }
                 ++filePos;
             }
-
         } catch (Exception e) {
             System.out.println("error in accessing outfile...");
             e.printStackTrace();
         }
-
         return 2;
     }
 
@@ -274,6 +275,7 @@ public class Main {
             BufferedWriter out = new BufferedWriter(outStreamWriter);
             out.write(fileContent.toString());
             out.close();
+            br.close();
         } catch (Exception e) {
             System.out.println("error in editing route");
             e.printStackTrace();
@@ -311,6 +313,8 @@ public class Main {
                         break;
                     }
                 }
+                in.close();
+                br.close();
             }
         } catch (Exception e) {
             System.out.println("error in editing route");
@@ -335,6 +339,7 @@ public class Main {
                 String temp = in.nextLine();
                 System.out.println(temp);
             }
+            in.close();
 
         } catch (Exception e) {
             System.out.println("Error printing table.");
