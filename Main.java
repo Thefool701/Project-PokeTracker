@@ -299,29 +299,30 @@ public class Main {
             BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
             String line = "";
             Scanner in = new Scanner(System.in);
-
             String pokemon = "";
 
             System.out.printf("%nEnter Pokemon to Check: ");
             pokemon = in.nextLine();
-            // FIX: Loop is only reading the first line and not continuing
+            boolean routeStatus = false;
             while ((line = br.readLine()) != null) {
                 String[] tokens = line.split(" ");
-                System.out.println(tokens[0]);
                 if (tokens.length > 0) {
-                    if (tokens[1].equals(pokemon)) {
-                        System.out.println("Pokemon already exists.");
-                        break;
-                    } else {
-                        System.out.println("No such Pokemon.");
-                        break;
+                    for (int j = 0; j < tokens.length; j++) {
+                        if (tokens[j].contains(pokemon)) {
+                            routeStatus = true;
+                            break;
+                        }
                     }
                 }
-                in.close();
-                br.close();
+
+            }
+            if (routeStatus == false) {
+                System.out.println("No such Pokemon.");
+            } else {
+                System.out.println("Pokemon already exists.");
             }
         } catch (Exception e) {
-            System.out.println("error in editing route");
+            System.out.println("error in checking route");
             e.printStackTrace();
         }
     }
