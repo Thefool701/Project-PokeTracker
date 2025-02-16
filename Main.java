@@ -341,31 +341,26 @@ public class Main {
             Scanner in = new Scanner(System.in);
 
             String route = "";
+            boolean routeStatus = false;
 
             System.out.printf("%nEnter Route to Check: ");
             route = in.nextLine();
-
             while ((line = br.readLine()) != null) {
+                // FIX: Checking iff the tokens[i] is space is not working
+                // FIX: Its also storing the route names seperately
+                // TODO: Think about storing the piece of code below in a
+                // seperate method
                 String[] tokens = line.split(" ");
-                System.out.println(tokens[0]);
-                if (tokens.length > 0) {
-                    // FIX: Also only reads the first line of the file
-                    if (tokens[0].equals(route)) {
-                        if (tokens[3].equals("Available")) {
-                            System.out.println("Route is Unavailable.");
-                        } else if (tokens[3].equals("")) {
-                            System.out.println("Route is Available.");
-                        } else {
-                            System.out.println("Route is Available.");
-                        }
-                        break;
+                LinkedList<String> llTokens = new LinkedList<String>();
+                for (int i = 0; i < tokens.length; i++) {
+                    if (tokens[i] == " ") {
+                        System.out.println("working...");
+                        continue;
                     } else {
-                        System.out.println("No such Route.");
-                        break;
+                        llTokens.add(tokens[i]);
                     }
                 }
-                in.close();
-                br.close();
+                System.out.println("" + llTokens);
             }
         } catch (Exception e) {
             System.out.println("route status checker failed...");
