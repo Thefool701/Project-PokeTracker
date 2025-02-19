@@ -339,28 +339,18 @@ public class Main {
             BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
             String line = "";
             Scanner in = new Scanner(System.in);
-
             String route = "";
-            boolean routeStatus = false;
-
+            LinkedList<String> llTokens = new LinkedList<String>();
             System.out.printf("%nEnter Route to Check: ");
             route = in.nextLine();
             while ((line = br.readLine()) != null) {
-                // FIX: Checking iff the tokens[i] is space is not working
-                // FIX: Its also storing the route names seperately
                 // TODO: Think about storing the piece of code below in a
                 // seperate method
-                String[] tokens = line.split(" ");
-                LinkedList<String> llTokens = new LinkedList<String>();
+                line.replaceAll("\\W", "-");
+                String[] tokens = line.split("-");
                 for (int i = 0; i < tokens.length; i++) {
-                    if (tokens[i] == " ") {
-                        System.out.println("working...");
-                        continue;
-                    } else {
-                        llTokens.add(tokens[i]);
-                    }
+                    llTokens.add(tokens[i]);
                 }
-                System.out.println("" + llTokens);
             }
         } catch (Exception e) {
             System.out.println("route status checker failed...");
