@@ -344,14 +344,14 @@ public class Main {
             System.out.printf("%nEnter Route to Check: ");
             route = in.nextLine();
             while ((line = br.readLine()) != null) {
-                // TODO: Think about storing the piece of code below in a
-                // seperate method
+                // WRONGGGGGG
                 line.replaceAll("\\W", "-");
                 String[] tokens = line.split("-");
                 for (int i = 0; i < tokens.length; i++) {
                     llTokens.add(tokens[i]);
                 }
             }
+
         } catch (Exception e) {
             System.out.println("route status checker failed...");
             e.printStackTrace();
