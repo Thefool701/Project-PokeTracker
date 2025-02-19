@@ -208,34 +208,37 @@ public class Main {
      * 
      */
 
-    public static int searchRoute(File outfile) {
-        int filePos = 0;
+    public static void searchRoute(File outfile) {
         try {
-            @SuppressWarnings("resource")
-            Scanner on = new Scanner(outfile);
-            @SuppressWarnings("resource")
+            FileInputStream outStream = new FileInputStream(outfile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
+            String line = "";
+            boolean routeStatus = false;
             Scanner in = new Scanner(System.in);
-
+            String route = "";
             System.out.printf("%nEnter Route to Search: ");
-            String findRoute = in.nextLine();
-            while (on.hasNext()) {
-                // TODO: Also do this
-                // Check how many spoaces there is in the line
-                // If more than 1, then split into tokens and compare
-                // token[0] with findRoute
-                // else, then just compare line with findRoute
-                String temp = on.nextLine();
-                if (temp.equals(findRoute) == true) {
-                    System.out.println("found...");
-                    return filePos;
+            route = in.nextLine();
+            // TODO: Check route if it exists
+            while ((line = br.readLine()) != null) {
+                line.replaceAll("\\W", "-");
+                String[] tokens = line.split("-");
+                if (tokens.length > 0) {
+                    for (int i = 0; i < tokens.length; i++) {
+                        if (tokens[i].contains(route)) {
+                            System.out.println(line);
+                            routeStatus = true;
+                            break;
+                        }
+                    }
                 }
-                ++filePos;
+                if (routeStatus) {
+                    break;
+                }
             }
         } catch (Exception e) {
-            System.out.println("error in accessing outfile...");
+            System.out.println("searching route has failed...");
             e.printStackTrace();
         }
-        return 2;
     }
 
     /**
