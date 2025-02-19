@@ -342,11 +342,14 @@ public class Main {
             BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
             String line = "";
             boolean routeStatus = false;
+            @SuppressWarnings("resource")
             Scanner in = new Scanner(System.in);
             String route = "";
-            System.out.printf("%nEnter Route to Check: ");
-            route = in.nextLine();
-            // TODO: CHeck route if it exists
+            do {
+                System.out.printf("%nEnter Route to Check: ");
+                route = in.nextLine();
+            } while (routeExistenceCheck(outfile, route) == false);
+
             while ((line = br.readLine()) != null) {
                 line.replaceAll("\\W", "-");
                 String[] tokens = line.split("-");
@@ -374,6 +377,39 @@ public class Main {
             System.out.println("route status checker failed...");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Scans the table if a certain Route exists.
+     *
+     * @param Outfile File that contains the regions information
+     * @param route   Name of the route to be checked
+     *
+     * @return routeStatus Returns either true or false if the route exists
+     */
+
+    public static boolean routeExistenceCheck(File outfile, String route) {
+        boolean routeStatus = false;
+        try {
+            FileInputStream outStream = new FileInputStream(outfile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                line.replaceAll("\\W", "-");
+                String[] tokens = new String[4];
+                if (tokens.length > 0) {
+                    for (int i = 0; i < tokens.length; i++) {
+                        if (tokens[i].contains(route)) {
+                            routeStatus = true;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("route status checker failed...");
+            e.printStackTrace();
+        }
+        return routeStatus;
     }
 
     /**
