@@ -128,7 +128,7 @@ public class Main {
         try {
             FileWriter fr = new FileWriter(outfile);
             BufferedWriter writer = new BufferedWriter(fr);
-            writer.write("Route         Pokemon         Typing          Status");
+            writer.write("Route         Pokemon         Typing         Status");
             for (int i = 0; i < routes.size(); i++) {
                 writer.newLine();
                 writer.write(routes.get(i));
@@ -152,9 +152,10 @@ public class Main {
         String pokemon = "";
         String pokemonTyping = "";
         String route = "";
-        String routeStatus = "Unavailable";
+        String routeStatus = "Marked";
         System.out.printf("%nEnter Route: ");
         route = in.nextLine();
+        // TODO: Check route if it exists before continuing
         System.out.printf("%nEnter Pokemon: ");
         pokemon = in.nextLine();
         System.out.printf("%nEnter Pokemon Typing(Primary/Secondary): ");
@@ -176,7 +177,6 @@ public class Main {
                         tokens[1] = pokemon;
                         tokens[2] = pokemonTyping;
                         tokens[3] = routeStatus;
-
                         String newRouteInfo = tokens[0] + spaces + tokens[1] + spaces + tokens[2] + spaces + tokens[3];
                         fileContent.append(newRouteInfo);
                         fileContent.append("\n");
@@ -338,18 +338,33 @@ public class Main {
             FileInputStream outStream = new FileInputStream(outfile);
             BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
             String line = "";
+            boolean routeStatus = false;
             Scanner in = new Scanner(System.in);
             String route = "";
-            LinkedList<String> llTokens = new LinkedList<String>();
             System.out.printf("%nEnter Route to Check: ");
             route = in.nextLine();
+            // TODO: CHeck route if it exists
             while ((line = br.readLine()) != null) {
-                // WRONGGGGGG
                 line.replaceAll("\\W", "-");
                 String[] tokens = line.split("-");
-                for (int i = 0; i < tokens.length; i++) {
-                    llTokens.add(tokens[i]);
+                if (tokens.length > 0) {
+                    for (int i = 0; i < tokens.length; i++) {
+                        if (tokens[i].contains(route)) {
+                            if (tokens[i].contains("Marked")) {
+                                routeStatus = true;
+                                break;
+                            }
+                        }
+                    }
                 }
+                if (routeStatus) {
+                    break;
+                }
+            }
+            if (routeStatus) {
+                System.out.println("Route has been Marked!");
+            } else {
+                System.out.println("Route is Unmarked!");
             }
 
         } catch (Exception e) {

@@ -1,9 +1,9 @@
-Route         Pokemon         Typing          Status
-Route 1       Charmander       Fire       Unavailable
+Route         Pokemon         Typing         Status
+Route 1       Infernape       Fire/Fighting       Marked
 Route 2
 Route 3
-Route 4
-Route 5       Totodile       Water       Unavailable
+Route 4       Meganium       Grass/Poison       Marked
+Route 5
 Route 6
 Route 7
 Route 8
@@ -11,7 +11,7 @@ Route 9
 Route 10
 Route 11
 Route 12
-Route 13       Pikachu       Lightning       Unavailable
+Route 13
 Route 14
 Route 15
 Route 16
