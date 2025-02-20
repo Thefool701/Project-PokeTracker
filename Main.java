@@ -389,19 +389,17 @@ public class Main {
      */
 
     public static boolean routeExistenceCheck(File outfile, String route) {
-        boolean routeStatus = false;
         try {
             FileInputStream outStream = new FileInputStream(outfile);
             BufferedReader br = new BufferedReader(new InputStreamReader(outStream));
             String line = "";
             while ((line = br.readLine()) != null) {
-                line.replaceAll("\\W", "-");
                 String[] tokens = new String[4];
+                tokens = line.split(" ");
+                System.out.println(tokens[1]);
                 if (tokens.length > 0) {
-                    for (int i = 0; i < tokens.length; i++) {
-                        if (tokens[i].contains(route)) {
-                            routeStatus = true;
-                        }
+                    if (tokens[0].contains(route)) {
+                        return true;
                     }
                 }
             }
@@ -409,7 +407,7 @@ public class Main {
             System.out.println("route status checker failed...");
             e.printStackTrace();
         }
-        return routeStatus;
+        return false;
     }
 
     /**
