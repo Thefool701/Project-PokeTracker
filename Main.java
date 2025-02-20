@@ -395,8 +395,8 @@ public class Main {
             String line = "";
             while ((line = br.readLine()) != null) {
                 String[] tokens = new String[4];
-                tokens = line.split(" ");
-                System.out.println(tokens[1]);
+                line = line.replace("\\W", "-");
+                tokens = line.split("-");
                 if (tokens.length > 0) {
                     if (tokens[0].contains(route)) {
                         return true;
