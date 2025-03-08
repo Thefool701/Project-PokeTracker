@@ -34,21 +34,27 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    clearScreen();
                     markRoute(outfile, routes);
                     break;
                 case 2:
+                    clearScreen();
                     duplicatePokemonCheck(outfile);
                     break;
                 case 3:
+                    clearScreen();
                     routeStatusCheck(outfile);
                     break;
                 case 4:
+                    clearScreen();
                     searchRoute(outfile);
                     break;
                 case 5:
+                    clearScreen();
                     printTable(outfile, row);
                     break;
                 case 6:
+                    clearScreen();
                     System.exit(1);
                     break;
                 default:
@@ -93,6 +99,11 @@ public class Main {
             System.out.println("Error reading the file...");
             e.printStackTrace();
         }
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     /**
