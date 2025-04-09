@@ -424,8 +424,8 @@ public class Main {
     /**
      * Simply prints the table of Kalos Routes and their corresponding info
      *
-     * @param takes an outfile as input
-     * @param takes a Linked List that contains the row
+     * @param outfile an outfile as input
+     * @param row a Linked List that contains the row
      */
     public static void printTable(File outfile, LinkedList<String> row) {
         try {
