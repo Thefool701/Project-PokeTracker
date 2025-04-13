@@ -211,6 +211,14 @@ public class Main {
     }
 
     /**
+     * Takes input as string and searches the specified region on region folder.
+     *
+     *
+     * @param region A specific region in the Pokemon Game
+     *
+     */
+
+    /**
      * It Searches the specific position where the route is and returns
      * an int indicating where the route is
      *
@@ -425,7 +433,7 @@ public class Main {
      * Simply prints the table of Kalos Routes and their corresponding info
      *
      * @param outfile an outfile as input
-     * @param row a Linked List that contains the row
+     * @param row     a Linked List that contains the row
      */
     public static void printTable(File outfile, LinkedList<String> row) {
         try {
