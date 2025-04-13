@@ -1,31 +1,20 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Sample {
-    public static void main(String[] args) {
-        String filePath = "kalos.in"; // Update the path to your file
-        int lineNumber = 2; // Specify the line number to read (starting from 1)
-        String specificLine = readLineFromFile(filePath, lineNumber);
-
-        if (specificLine != null) {
-            System.out.println("Line " + lineNumber + ": " + specificLine);
-        } else {
-            System.out.println("Line number " + lineNumber + " is not found.");
-        }
+    public static void main(String... args) {
+        File dir = new File("Regions/");
+        showFiles(dir.listFiles());
     }
 
-    public static String readLineFromFile(String filePath, int lineNumber) {
-        String line = null;
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            for (int i = 1; i <= lineNumber; i++) {
-                line = br.readLine();
-                if (line == null)
-                    return null; // Return null if the line doesn't exist
+    public static void showFiles(File[] files) {
+        for (File file : files) {
+            if (file.isDirectory()) {
+                System.out.println("Directory: " + file.getName());
+                showFiles(file.listFiles());
+            } else {
+                System.out.println("File: " + file.getName());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
-        return line;
     }
 }
