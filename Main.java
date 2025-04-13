@@ -1,21 +1,25 @@
-import java.util.Scanner;
-import java.util.LinkedList;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 // TODO: Add option to delete contents of the file and add 2nd layer of security
 // when deleting the contents of file. 
-//
-// TODO: Add the clear screen method 
+
+//TODO: Create a method that returns an File, which corresponds to a region
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         LinkedList<String> row = new LinkedList<String>();
-        File infile = new File("routes.in");
+        File infile = getRegion();
         LinkedList<String> routes = new LinkedList<String>();
         int choice = 0;
         createOutfile();
-        File outfile = new File("kalos.in");
+        File outfile = new File("outfile.txt");
         if (readOutfile(outfile) == false) {
             readInputFile(infile, routes);
             writeOutfile(outfile, routes);
@@ -448,6 +452,39 @@ public class Main {
             System.out.println("Error printing table.");
             e.printStackTrace();
         }
+    }
+
+    /**
+     *
+     * Returns an outfile that contains the pokemon region that will be used.
+     *
+     * @return pokemonRegion
+     */
+    public static File getRegion() {
+        String pokemonRegion = "";
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter Pokemon Region: ");
+        pokemonRegion = in.nextLine();
+        // Then check if the region exists in the Regions File
+        boolean regionStatus = regionExistenceCheck();
+
+        File outfile = new File(pokemonRegion);
+
+        return outfile;
+
+    }
+
+    /**
+     * Checks to see if the inputted route exists in the file.
+     *
+     *
+     * @param pokemonRegion The string containing the inputted region.
+     * 
+     * @return regionStatus
+     */
+    public static boolean regionExistenceCheck() {
+
+        return true;
     }
 
 }
