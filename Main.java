@@ -15,6 +15,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         LinkedList<String> row = new LinkedList<String>();
+        // TODO: Add a way to make sure that there is no need to
+        // input another region if there has already been input.
+        // SOL 1: Check if outfile.txt has content or not.
         File infile = getRegion();
         LinkedList<String> routes = new LinkedList<String>();
         int choice = 0;
@@ -70,7 +73,7 @@ public class Main {
 
     public static void createOutfile() {
         try {
-            File outfile = new File("kalos.in");
+            File outfile = new File("outfile.out");
             if (outfile.createNewFile()) {
                 System.out.println("File Created: " + outfile.getName());
             } else {
@@ -455,15 +458,15 @@ public class Main {
     public static File getRegion() {
         String pokemonRegion = "";
         Scanner in = new Scanner(System.in);
-        System.out.println("Enter Pokemon Region: ");
-        pokemonRegion = in.nextLine();
-        // Then check if the region exists in the Regions File
-        boolean regionStatus = regionExistenceCheck();
-
+        // FIX: Its endlessly loooping. Problem is the condition.
+        do {
+            System.out.printf("\nEnter Pokemon Region: ");
+            pokemonRegion = in.nextLine();
+        } while (regionExistenceCheck(pokemonRegion) == false);
         File outfile = new File(pokemonRegion);
 
+        in.close();
         return outfile;
-
     }
 
     /**
@@ -474,9 +477,32 @@ public class Main {
      * 
      * @return regionStatus
      */
-    public static boolean regionExistenceCheck() {
-
-        return true;
+    public static boolean regionExistenceCheck(String pokemonRegion) {
+        boolean regionStatus = false;
+        File dir = new File("Regions/");
+        regionStatus = showFiles(dir.listFiles(), pokemonRegion);
+        return regionStatus;
     }
 
+    /**
+     * Scans the Regions directory and checks to see if pokemonRegion exists.
+     *
+     * @param files         Array that contains the list of files in the directory.
+     * @param pokemonRegion The string containing the inputed region.
+     *
+     * @return regionStatus
+     */
+    public static boolean showFiles(File[] files, String pokemonRegion) {
+        boolean status = false;
+        for (File file : files) {
+            if (file.isDirectory()) {
+                System.out.println(file.getName());
+                if (pokemonRegion.equalsIgnoreCase(file.getName())) {
+                    status = true;
+                }
+                status = showFiles(file.listFiles(), pokemonRegion);
+            }
+        }
+        return status;
+    }
 }
