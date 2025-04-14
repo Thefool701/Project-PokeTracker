@@ -218,6 +218,14 @@ public class Main {
     }
 
     /**
+     * Takes input as string and searches the specified region on region folder.
+     *
+     *
+     * @param region A specific region in the Pokemon Game
+     *
+     */
+
+    /**
      * It Searches the specific position where the route is and returns
      * an int indicating where the route is
      *
